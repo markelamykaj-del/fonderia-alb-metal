@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alb Metal Construction | Fonderi Gize &amp; Alumini</title>
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<style>
+  :root{
+    --iron-black:#141312;
+    --iron-charcoal:#232120;
+    --iron-charcoal-2:#2c2a28;
+    --cast-grey:#524d48;
+    --molten:#e8621a;
+    --molten-2:#f5a623;
+    --ember:#b23a1d;
+    --aluminum:#c9cdd0;
+    --cream:#ece6db;
+    --cream-dim:#b9b2a4;
+    --line:rgba(236,230,219,0.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--iron-black);
+    color:var(--cream);
+    font-family:'Archivo',sans-serif;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--molten);color:var(--iron-black);}
+  h1,h2,h3,.display{
+    font-family:'Bebas Neue',sans-serif;
+    letter-spacing:0.02em;
+    line-height:0.95;
+    text-transform:uppercase;
+    font-weight:400;
+  }
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--molten);
+    display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:'';width:24px;height:1px;background:var(--molten);}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  section{position:relative;}
+  #rreth, #trust, #proces, #modele3d, #galeria, #oferte, #kontakt{scroll-margin-top:180px;}
+  .tag{
+    display:inline-flex;align-items:center;font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;letter-spacing:0.06em;color:var(--molten-2);
+    border:1px solid rgba(245,166,35,0.35);padding:3px 9px;border-radius:20px;
+  }
+
+  /* grain overlay */
+  .grain{
+    position:fixed;inset:0;pointer-events:none;z-index:999;opacity:0.045;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+  }
+  .topbar{background:var(--molten-2);height:40px;}
+  .topbar-inner{display:flex;align-items:center;justify-content:space-between;height:100%;}
+  .topbar-left{display:flex;align-items:center;gap:26px;overflow:hidden;}
+  .topbar-item{
+    display:flex;align-items:center;gap:6px;white-space:nowrap;
+    color:var(--iron-black);font-size:12px;font-weight:700;letter-spacing:0.01em;
+    transition:opacity .2s;
+  }
+  .topbar-item:hover{opacity:0.7;}
+  .topbar-item svg{width:13px;height:13px;flex-shrink:0;}
+  .topbar-right{display:flex;align-items:center;gap:16px;flex-shrink:0;}
+  .topbar-right a{color:rgba(20,18,16,0.92);transition:color .2s;}
+  .topbar-right a:hover{color:var(--iron-black);}
+  .topbar-right svg{width:16px;height:16px;display:block;}
+
+  .navwrap{
+    background:rgba(20,19,18,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:140px;position:relative;gap:20px;}
+  .logo-mark{
+    display:flex;align-items:center;
+    height:108px;flex-shrink:0;
+    position:relative;z-index:2;
+  }
+  .logo-mark img{height:100%;width:auto;max-width:340px;object-fit:contain;}
+  .navlinks{display:flex;gap:32px;font-size:14px;font-weight:600;letter-spacing:0.02em;flex-shrink:1;}
+  .navlinks a{position:relative;padding:4px 0;color:var(--cream-dim);transition:color .2s;white-space:nowrap;}
+  .navlinks a:hover{color:var(--cream);}
+  .navlinks a::after{content:'';position:absolute;left:0;bottom:-2px;width:0;height:1px;background:var(--molten);transition:width .25s;}
+  .navlinks a:hover::after{width:100%;}
+  .navright{display:flex;align-items:center;gap:16px;flex-shrink:0;}
+  .menu-dropdown{position:relative;}
+  .menu-trigger{
+    display:flex;align-items:center;gap:7px;background:transparent;border:1px solid var(--line);
+    color:var(--cream);font-size:13px;font-weight:600;font-family:'Archivo',sans-serif;
+    padding:10px 16px;border-radius:2px;cursor:pointer;transition:border-color .2s;
+  }
+  .menu-trigger:hover{border-color:var(--molten);}
+  .menu-trigger svg{width:14px;height:14px;transition:transform .25s;}
+  .menu-trigger.open svg{transform:rotate(180deg);}
+  .menu-panel{
+    position:absolute;top:calc(100% + 10px);right:0;background:#1c1b19;border:1px solid var(--line);
+    border-radius:4px;min-width:210px;padding:8px;display:none;flex-direction:column;gap:1px;
+    box-shadow:0 16px 40px rgba(0,0,0,0.45);z-index:150;
+  }
+  .menu-panel.open{display:flex;}
+  .menu-panel a{padding:11px 14px;font-size:13.5px;font-weight:500;color:var(--cream-dim);border-radius:2px;transition:background .2s,color .2s;}
+  .menu-panel a:hover{background:rgba(232,98,26,0.14);color:var(--cream);}
+  .tel{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cream-dim);}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--molten);color:var(--iron-black);
+    font-weight:700;font-size:13px;letter-spacing:0.02em;
+    padding:11px 20px;border-radius:2px;border:none;cursor:pointer;
+    transition:background .2s, transform .2s;
+  }
+  .btn:hover{background:var(--molten-2);transform:translateY(-1px);}
+  .btn-outline{background:transparent;border:1px solid var(--line);color:var(--cream);}
+  .btn-outline:hover{border-color:var(--molten);background:transparent;}
+  .navtoggle{display:none;background:none;border:none;color:var(--cream);font-size:24px;cursor:pointer;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100vh;
+    display:flex;flex-direction:column;justify-content:center;
+    padding-top:180px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-photo{
+    position:absolute;inset:0;z-index:0;
+    background-image:url('images/brand/hero-workers.webp');
+    background-size:cover;background-position:center 30%;
+    opacity:0.6;filter:grayscale(0.2) contrast(1.15) saturate(1.05);
+    mask-image:linear-gradient(100deg, transparent 0%, transparent 24%, rgba(0,0,0,0.7) 48%, black 78%);
+    -webkit-mask-image:linear-gradient(100deg, transparent 0%, transparent 24%, rgba(0,0,0,0.7) 48%, black 78%);
+  }
+  .hero-scrim{
+    position:absolute;inset:0;z-index:1;
+    background:
+      radial-gradient(ellipse 60% 50% at 82% 18%, rgba(232,98,26,0.24), transparent 60%),
+      radial-gradient(ellipse 40% 40% at 10% 90%, rgba(232,98,26,0.12), transparent 60%),
+      linear-gradient(100deg, var(--iron-black) 0%, rgba(20,19,18,0.86) 34%, rgba(20,19,18,0.35) 62%, rgba(20,19,18,0.55) 100%),
+      linear-gradient(180deg, rgba(20,19,18,0.35), var(--iron-black) 82%);
+  }
+  .hero-glow{
+    position:absolute;z-index:1;width:900px;height:900px;border-radius:50%;
+    right:-320px;top:-200px;
+    background:radial-gradient(circle, rgba(232,98,26,0.28) 0%, rgba(232,98,26,0.06) 45%, transparent 70%);
+    filter:blur(10px);
+    animation:pulse 7s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:0.7;transform:scale(1);}50%{opacity:1;transform:scale(1.06);}}
+  .hero-inner{position:relative;z-index:2;}
+  .hero-model{display:none;}
+  @media (min-width:1800px){
+    .hero-model{
+      display:block;position:absolute;top:50%;transform:translateY(-50%);
+      width:260px;aspect-ratio:1/1;z-index:1;
+      background:radial-gradient(ellipse at 50% 55%, rgba(232,98,26,0.16), transparent 70%);
+    }
+    #hero-model-left{left:calc((100% - 1180px)/2 - 286px);}
+    #hero-model-right{right:calc((100% - 1180px)/2 - 286px);}
+    .hero-model canvas{width:100%!important;height:100%!important;display:block;cursor:grab;}
+    .hero-model canvas:active{cursor:grabbing;}
+  }
+  .hero .eyebrow{margin-bottom:26px;}
+  .hero h1{font-size:clamp(48px,8vw,108px);max-width:880px;letter-spacing:-0.01em;}
+  .hero h1 em{font-style:normal;color:var(--molten);}
+  .hero p.lead{max-width:540px;margin-top:28px;font-size:18px;line-height:1.65;color:var(--cream-dim);}
+  .hero-ctas{display:flex;gap:16px;margin-top:40px;flex-wrap:wrap;}
+  .hero-ctas .btn svg{width:15px;height:15px;transition:transform .25s ease;}
+  .hero-ctas .btn:hover svg{transform:translateX(3px);}
+  .hero-scroll-cue{
+    position:absolute;left:32px;bottom:34px;z-index:2;display:flex;align-items:center;gap:12px;
+  }
+  @media (max-width:900px){
+    .hero-scroll-cue{display:none;}
+  }
+  .hero-scroll-cue .line{width:34px;height:1px;background:var(--line);position:relative;overflow:hidden;}
+  .hero-scroll-cue .line::after{content:'';position:absolute;inset:0;background:var(--molten);animation:cuesweep 2.2s ease-in-out infinite;}
+  @keyframes cuesweep{0%{transform:translateX(-100%);}50%{transform:translateX(0);}100%{transform:translateX(100%);}}
+  .hero-scroll-cue span{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.16em;color:var(--cream-dim);}
+  .stat-row{display:flex;flex-wrap:wrap;gap:20px 22px;margin-top:92px;border-top:1px solid var(--line);padding-top:30px;}
+  .stat{flex:1;min-width:150px;}
+  .stat .num{font-family:'Bebas Neue',sans-serif;font-size:46px;letter-spacing:0.01em;color:var(--molten);line-height:1;transition:text-shadow .3s ease;}
+  .stat .num.count-done{animation:countPulse .5s ease;}
+  @keyframes countPulse{0%{text-shadow:0 0 0 rgba(232,98,26,0);}40%{text-shadow:0 0 24px rgba(245,166,35,0.85);}100%{text-shadow:0 0 0 rgba(232,98,26,0);}}
+  .stat .lbl{font-size:12px;color:var(--cream-dim);margin-top:7px;letter-spacing:0.03em;}
+  @media (min-width:980px){
+    .stat-row{flex-wrap:nowrap;gap:0;}
+    .stat{padding:0 28px;border-left:1px solid var(--line);}
+    .stat:first-child{padding-left:0;border-left:none;}
+  }
+
+  /* ---------- STRIP ---------- */
+  .strip{
+    background:var(--iron-charcoal);border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    padding:16px 0;overflow:hidden;white-space:nowrap;
+  }
+  .strip .track{display:inline-block;animation:scroll 28s linear infinite;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:0.08em;color:var(--cream-dim);}
+  .strip .track span{margin:0 28px;}
+  .strip .track span::after{content:'◆';margin-left:28px;color:var(--molten);}
+  @keyframes scroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+  /* ---------- SECTION generic ---------- */
+  .section{padding:120px 0;}
+  .section-head{max-width:640px;margin-bottom:64px;}
+  .section-head h2{font-size:clamp(34px,5vw,56px);margin-top:14px;}
+  .section-head p{color:var(--cream-dim);margin-top:16px;font-size:16px;line-height:1.6;}
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+  .about-text p{color:var(--cream-dim);line-height:1.75;font-size:15.5px;margin-bottom:16px;}
+  .furnace-visual{
+    position:relative;aspect-ratio:1/1;border-radius:4px;
+    background-image:
+      radial-gradient(circle at 50% 55%, rgba(245,166,35,0.35), rgba(232,98,26,0.1) 45%, transparent 70%),
+      url('images/furnace/furnace-2.jpg');
+    background-size:cover;background-position:center;
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+  }
+  .furnace-visual::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(20,19,18,0.12), rgba(20,19,18,0.78));}
+  .furnace-ring{
+    position:relative;z-index:2;
+    width:60%;aspect-ratio:1/1;border-radius:50%;
+    border:2px solid rgba(232,98,26,0.6);
+    display:flex;align-items:center;justify-content:center;
+    animation:spin 18s linear infinite;
+  }
+  .furnace-ring::before{content:'';width:70%;aspect-ratio:1/1;border-radius:50%;border:1px dashed rgba(236,230,219,0.3);}
+  @keyframes spin{100%{transform:rotate(360deg);}}
+  .furnace-label{position:absolute;bottom:22px;left:22px;z-index:2;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cream);}
+
+  .about-showcase{
+    position:relative;aspect-ratio:3/4;border-radius:4px;border:1px solid var(--line);
+    overflow:hidden;background:var(--iron-charcoal);cursor:pointer;
+  }
+  .showcase-slide{
+    position:absolute;inset:0;opacity:0;transition:opacity .7s ease, transform 6s ease;
+    background-size:cover;background-position:center;transform:scale(1.02);
+  }
+  .showcase-slide.active{opacity:1;transform:scale(1.08);}
+  .showcase-slide::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg, rgba(20,19,18,0.92) 0%, rgba(20,19,18,0.1) 45%, rgba(20,19,18,0.25) 100%);}
+  .showcase-caption{position:absolute;left:0;right:0;bottom:0;padding:26px;z-index:2;}
+  .showcase-caption .cap-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.14em;color:var(--molten-2);margin-bottom:8px;}
+  .showcase-caption h4{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:0.02em;text-transform:uppercase;color:var(--cream);}
+  .showcase-dots{position:absolute;top:18px;right:18px;display:flex;gap:9px;z-index:3;}
+  .showcase-dot{width:8px;height:8px;border-radius:50%;background:rgba(236,230,219,0.4);border:none;cursor:pointer;transition:background .2s, transform .2s;padding:0;}
+  .showcase-dot.active{background:var(--molten);transform:scale(1.4);}
+  .stat-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:36px;}
+  .stat-card{border:1px solid var(--line);padding:20px;border-radius:2px;}
+  .stat-card .num{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--molten);}
+  .stat-card .lbl{font-size:12.5px;color:var(--cream-dim);margin-top:4px;}
+
+  /* ---------- PROCESS ---------- */
+  .process-bg{background:var(--iron-charcoal);}
+  .process-list{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;}
+  .process-list::before{content:'';position:absolute;top:26px;left:0;right:0;height:1px;background:var(--line);}
+  .pstep{position:relative;padding-right:20px;}
+  .pnum{
+    font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--iron-black);
+    background:var(--molten);width:52px;height:52px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;position:relative;z-index:2;margin-bottom:22px;
+  }
+  .pstep h3{font-size:19px;font-family:'Archivo',sans-serif;font-weight:700;text-transform:none;letter-spacing:0;margin-bottom:8px;}
+  .pstep p{font-size:13.5px;color:var(--cream-dim);line-height:1.6;}
+
+  /* ---------- PRODUCTS / 3D ---------- */
+  .viewer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+  .viewer-card{border:1px solid var(--line);background:var(--iron-charcoal);border-radius:3px;overflow:hidden;transition:border-color .25s;}
+  .viewer-card:hover{border-color:rgba(232,98,26,0.5);}
+  .viewer-canvas-wrap{
+    position:relative;aspect-ratio:4/3;
+    background:radial-gradient(ellipse at 50% 40%, rgba(232,98,26,0.14), transparent 65%), #1a1918;
+    cursor:grab;
+  }
+  .viewer-canvas-wrap:active{cursor:grabbing;}
+  .viewer-canvas-wrap canvas{width:100%!important;height:100%!important;display:block;}
+  .viewer-tag{
+    position:absolute;top:14px;left:14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;
+    color:var(--molten-2);border:1px solid rgba(245,166,35,0.4);padding:4px 8px;border-radius:20px;
+    display:flex;align-items:center;gap:6px;background:rgba(20,19,18,0.55);
+  }
+  .viewer-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--molten-2);animation:blink 1.6s infinite;}
+  @keyframes blink{50%{opacity:0.2;}}
+  .viewer-hint{
+    position:absolute;bottom:14px;right:14px;font-family:'JetBrains Mono',monospace;font-size:10px;
+    color:var(--cream-dim);opacity:0.75;background:rgba(20,19,18,0.5);padding:3px 8px;border-radius:20px;
+  }
+  .viewer-body{padding:22px;}
+  .viewer-body h3{font-family:'Archivo',sans-serif;font-weight:700;text-transform:none;font-size:18px;letter-spacing:0;margin-bottom:10px;}
+  .spec-row{display:flex;justify-content:space-between;gap:12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--cream-dim);padding:6px 0;border-top:1px dashed var(--line);}
+  .spec-row span:last-child{color:var(--cream);text-align:right;}
+
+  .simple-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:24px;}
+  .simple-card{border:1px solid var(--line);padding:26px 22px;border-radius:2px;transition:transform .2s, border-color .2s;}
+  .simple-card:hover{transform:translateY(-4px);border-color:rgba(232,98,26,0.5);}
+  .simple-photo{width:100%;aspect-ratio:4/3;border-radius:2px;margin-bottom:18px;overflow:hidden;background:#0d0d0c;}
+  .simple-photo img{width:100%;height:100%;object-fit:contain;}
+  .simple-card h3{font-family:'Archivo',sans-serif;font-weight:700;text-transform:none;font-size:16px;letter-spacing:0;margin-bottom:8px;}
+  .simple-card p{font-size:13.5px;color:var(--cream-dim);line-height:1.55;}
+
+  /* ---------- TRUST ---------- */
+  .trust-bg{background:var(--iron-charcoal);position:relative;overflow:hidden;}
+  .trust-photo{
+    position:absolute;inset:0;z-index:0;
+    background-image:url('images/brand/facility-twilight.jpg');
+    background-size:cover;background-position:center 30%;
+    opacity:0.22;filter:grayscale(0.2) contrast(1.05);
+  }
+  .trust-scrim{
+    position:absolute;inset:0;z-index:1;
+    background:linear-gradient(180deg, rgba(35,33,32,0.75), var(--iron-charcoal) 65%);
+  }
+  .product-banner{
+    position:relative;border-radius:4px;overflow:hidden;border:1px solid var(--line);
+    aspect-ratio:21/9;margin-bottom:40px;
+  }
+  .product-banner img{width:100%;height:100%;object-fit:cover;display:block;}
+  .product-banner-cap{
+    position:absolute;left:0;bottom:0;padding:22px 26px;
+    background:linear-gradient(0deg, rgba(20,19,18,0.9), transparent);
+  }
+  .product-banner-cap .cap-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.14em;color:var(--molten-2);margin-bottom:6px;}
+  .product-banner-cap h4{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:0.02em;text-transform:uppercase;color:var(--cream);}
+  .trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:20px;}
+  .trust-card{background:var(--iron-charcoal);padding:32px 24px;}
+  .trust-ic{width:34px;height:34px;color:var(--molten);margin-bottom:18px;}
+  .trust-card h4{font-size:14px;font-weight:700;margin-bottom:8px;letter-spacing:0.01em;}
+  .trust-card p{font-size:12.5px;color:var(--cream-dim);line-height:1.55;}
+  .facility-strip{
+    display:flex;gap:28px;align-items:center;margin-top:20px;
+    background:rgba(20,19,18,0.4);border:1px solid var(--line);border-radius:4px;padding:22px;
+  }
+  .facility-photo{width:170px;flex-shrink:0;border-radius:3px;overflow:hidden;aspect-ratio:4/5;}
+  .facility-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .facility-text .cap-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.14em;color:var(--molten-2);margin-bottom:8px;}
+  .facility-text h4{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:0.02em;text-transform:uppercase;margin-bottom:8px;}
+  .facility-text p{font-size:13.5px;color:var(--cream-dim);line-height:1.6;max-width:520px;}
+
+  /* ---------- GALLERY ---------- */
+  .gal-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;}
+  .gal-tab{
+    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.04em;
+    padding:10px 18px;border:1px solid var(--line);border-radius:20px;color:var(--cream-dim);
+    background:transparent;cursor:pointer;transition:all .2s;
+  }
+  .gal-tab:hover{border-color:rgba(232,98,26,0.5);color:var(--cream);}
+  .gal-tab.active{background:var(--molten);border-color:var(--molten);color:var(--iron-black);font-weight:700;}
+  .gal-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
+  .gal-item{
+    position:relative;overflow:hidden;border-radius:2px;border:1px solid var(--line);
+    aspect-ratio:1/1;background:#0d0d0c;cursor:pointer;
+  }
+  .gal-item img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;}
+  .gal-item.contain img{object-fit:contain;}
+  .gal-item:hover img{transform:scale(1.08);}
+  .gal-count{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cream-dim);margin-bottom:24px;}
+
+  .lightbox{
+    position:fixed;inset:0;background:rgba(10,9,8,0.94);z-index:1000;
+    display:none;align-items:center;justify-content:center;padding:40px;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:90vw;max-height:85vh;object-fit:contain;border-radius:2px;}
+  .lightbox-close{
+    position:absolute;top:28px;right:32px;background:none;border:1px solid var(--line);color:var(--cream);
+    width:42px;height:42px;border-radius:50%;font-size:20px;cursor:pointer;
+  }
+  .lightbox-nav{
+    position:absolute;top:50%;transform:translateY(-50%);background:none;border:1px solid var(--line);color:var(--cream);
+    width:48px;height:48px;border-radius:50%;font-size:20px;cursor:pointer;
+  }
+  .lightbox-prev{left:24px;} .lightbox-next{right:24px;}
+
+  /* ---------- CERT STRIP ---------- */
+  .cert-bg{background:var(--iron-black);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .cert-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;padding:36px 0;}
+  .cert-item{display:flex;align-items:center;gap:12px;color:var(--cream-dim);font-size:13px;}
+  .cert-item svg{width:22px;height:22px;color:var(--molten);flex-shrink:0;}
+
+  /* ---------- QUOTE FORM ---------- */
+  .quote-bg{background:linear-gradient(180deg, var(--iron-charcoal), var(--iron-black));border-top:1px solid var(--line);}
+  .quote-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:70px;}
+  .quote-grid .about-text p{margin-bottom:22px;}
+  .contact-line{display:flex;align-items:center;gap:14px;padding:14px 0;border-top:1px solid var(--line);font-size:14.5px;}
+  .contact-line:last-of-type{border-bottom:1px solid var(--line);}
+  .contact-line svg{width:18px;height:18px;color:var(--molten);flex-shrink:0;}
+  form{display:grid;gap:16px;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  label{font-size:11px;font-family:'JetBrains Mono',monospace;letter-spacing:0.08em;color:var(--cream-dim);text-transform:uppercase;display:block;margin-bottom:8px;}
+  input,select,textarea{
+    width:100%;background:var(--iron-black);border:1px solid var(--line);color:var(--cream);
+    padding:13px 14px;font-family:'Archivo',sans-serif;font-size:14px;border-radius:2px;transition:border-color .2s;
+  }
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--molten);}
+  textarea{resize:vertical;min-height:100px;}
+  .form-hint{font-size:11.5px;color:var(--cream-dim);opacity:0.6;margin-top:-4px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{border-top:1px solid var(--line);padding:64px 0 28px;background:var(--iron-black);}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:48px;}
+  .foot-grid h5{font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--cream-dim);margin-bottom:16px;font-family:'JetBrains Mono',monospace;}
+  .foot-grid ul{list-style:none;}
+  .foot-grid li{margin-bottom:10px;font-size:14px;}
+  .foot-grid li a{color:var(--cream-dim);transition:color .2s;}
+  .foot-grid li a:hover{color:var(--molten);}
+  .foot-logo{display:inline-flex;margin-bottom:18px;}
+  .foot-logo img{height:100px;width:auto;}
+  .foot-bottom{border-top:1px solid var(--line);padding-top:24px;display:flex;justify-content:space-between;font-size:12px;color:var(--cream-dim);flex-wrap:wrap;gap:10px;}
+
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  @media (max-width:900px){
+    .topbar{display:none;}
+    .nav{height:84px;}
+    .logo-mark{height:96px;}
+    .hero{padding-top:84px;padding-bottom:56px;}
+    #rreth, #trust, #proces, #galeria, #oferte, #kontakt{scroll-margin-top:84px;}
+    .navlinks,.navright .tel{display:none;}
+    .navtoggle{display:block;}
+    .about-grid,.quote-grid{grid-template-columns:1fr;}
+    .process-list{grid-template-columns:repeat(2,1fr);gap:32px;}
+    .process-list::before{display:none;}
+    .viewer-grid,.simple-grid{grid-template-columns:1fr 1fr;}
+    .trust-grid{grid-template-columns:repeat(2,1fr);}
+    .gal-grid{grid-template-columns:repeat(3,1fr);}
+    .foot-grid{grid-template-columns:1fr 1fr;}
+    .form-row{grid-template-columns:1fr;}
+    .cert-row{justify-content:flex-start;}
+  }
+  @media (max-width:600px){
+    .viewer-grid,.simple-grid{grid-template-columns:1fr;}
+    .gal-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important;}
+  }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<header>
+  <div class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="topbar-left">
+        <a href="mailto:famcpatos.al@gmail.com" class="topbar-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>famcpatos.al@gmail.com</a>
+        <a href="https://maps.app.goo.gl/vBR6nX2b7BUcft9u8" target="_blank" rel="noopener" class="topbar-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Patos, Lagjja Transport, Rruga Alush Noga</a>
+        <a href="tel:0692064155" class="topbar-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.4 2.1L8 9.9a16 16 0 0 0 6 6l1.4-1.4a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.8 2Z"/></svg>069 206 4155</a>
+        <a href="tel:0696064155" class="topbar-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.4 2.1L8 9.9a16 16 0 0 0 6 6l1.4-1.4a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.8 2Z"/></svg>069 606 4155</a>
+      </div>
+      <div class="topbar-right">
+        <a href="https://www.facebook.com/p/ALB-METAL-Construction-100057133314009/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12Z"/></svg></a>
+        <a href="https://www.instagram.com/alb_metal_construction" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="navwrap">
+  <div class="wrap nav">
+    <a href="#" class="logo-mark"><img src="images/logo.png" alt="Fonderia Alb Metal"></a>
+    <nav class="navlinks">
+      <a href="#rreth">Rreth Nesh</a>
+      <a href="#proces">Procesi</a>
+      <a href="#galeria">Galeria</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+    <div class="navright">
+      <div class="menu-dropdown">
+        <button class="menu-trigger" id="menu-trigger">
+          Menu
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="menu-panel" id="menu-panel">
+          <a href="#rreth">Rreth Nesh</a>
+          <a href="#trust">Pse Ne</a>
+          <a href="#proces">Procesi</a>
+          <a href="#modele3d">Modele 3D</a>
+          <a href="#galeria">Galeria</a>
+          <a href="#oferte">Kërko Ofertë</a>
+          <a href="#kontakt">Kontakt</a>
+        </div>
+      </div>
+      <a href="#oferte" class="btn">Porosit Tani</a>
+    </div>
+    <button class="navtoggle">☰</button>
+  </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-photo"></div>
+  <div class="hero-scrim"></div>
+  <div class="hero-glow"></div>
+  <div class="wrap hero-inner">
+    <div class="hero-model" id="hero-model-left"></div>
+    <div>
+      <div class="eyebrow">PATOS, SHQIPËRI · FONDERI QË NGA 2000</div>
+      <h1>Infrastrukturë<br><em>Moderne.</em></h1>
+      <p class="lead">Alb Metal Construction shkrin, derdh dhe formëson gizë e alumini për infrastrukturën urbane: puseta, ndriçim rrugor dhe mobilje qyteti, të prodhuara në Patos dhe të eksportuara jashtë vendit.</p>
+      <div class="hero-ctas">
+        <a href="#galeria" class="btn">Shiko Galerinë <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="#oferte" class="btn btn-outline">Porosit Tani</a>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><div class="num" data-count="26">0</div><div class="lbl">Vjet Përvojë</div></div>
+        <div class="stat"><div class="num" data-count="6">0</div><div class="lbl">Linja Produktesh</div></div>
+        <div class="stat"><div class="num" data-count="180">0</div><div class="lbl">°C Lyerje Elektrostatike</div></div>
+        <div class="stat"><div class="num">IP68</div><div class="lbl">Mbrojtje Ndriçim Rrugor</div></div>
+      </div>
+    </div>
+    <div class="hero-model" id="hero-model-right"></div>
+  </div>
+  <div class="hero-scroll-cue"><div class="line"></div><span>ZBRIT POSHTË</span></div>
+</section>
+
+<div class="strip">
+  <div class="track">
+    <span>PUSETA GIZE</span><span>ZGARA METALIKE</span><span>SHTYLLA NDRIÇIMI</span><span>NDRIÇUES DEKORATIVË</span><span>STOLA URBANË</span><span>KOSHA DEKORATIVË</span>
+    <span>PUSETA GIZE</span><span>ZGARA METALIKE</span><span>SHTYLLA NDRIÇIMI</span><span>NDRIÇUES DEKORATIVË</span><span>STOLA URBANË</span><span>KOSHA DEKORATIVË</span>
+  </div>
+</div>
+
+<section class="section" id="rreth">
+  <div class="wrap about-grid">
+    <div class="about-text reveal">
+      <div class="eyebrow">RRETH NESH</div>
+      <h2 style="margin-top:14px;">Prodhim me standarde<br>të larta</h2>
+      <p style="margin-top:22px;">Alb Metal Construction ka nisur veprimtarinë në vitin 2000 dhe operon në fushën e fonderisë, e specializuar në derdhjen dhe formësimin e gizës dhe aluminit për infrastrukturë, rrugë dhe ndriçim urban.</p>
+      <p>Me teknologji moderne si furra induktive dhe një proces të plotë prodhimi brenda impiantit tonë në Patos, ofrojmë produkte për tregun vendas dhe atë ndërkombëtar, nga bashki e kompani ndërtimi deri te projekte private.</p>
+      <p>Kompania është e specializuar në prodhimin e elementëve metalikë për infrastrukturë, rrugë, lulishte dhe ambiente urbane, duke garantuar standarde të larta cilësie dhe qëndrueshmërie. Çdo produkt kalon nga projektimi, te derdhja në furrën induktive, deri te përfundimi me lyerje elektrostatike.</p>
+      <p>Ofrojmë gjithashtu prodhim të personalizuar sipas kërkesave specifike të projekteve infrastrukturore, bashkive apo kompanive private, me shpërndarje në të gjithë Shqipërinë dhe eksport jashtë vendit.</p>
+      <div class="stat-grid-2">
+        <div class="stat-card"><div class="num">2000</div><div class="lbl">Themeluar</div></div>
+        <div class="stat-card"><div class="num">180°C</div><div class="lbl">Lyerje Elektrostatike</div></div>
+        <div class="stat-card"><div class="num">AL / EU</div><div class="lbl">Shpërndarje &amp; Eksport</div></div>
+        <div class="stat-card"><div class="num">Sipas Kërkesës</div><div class="lbl">Prodhim i Personalizuar</div></div>
+      </div>
+    </div>
+
+    <div class="about-showcase reveal" id="about-showcase">
+      <div class="showcase-dots" id="showcase-dots"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section trust-bg" id="trust">
+  <div class="trust-photo"></div>
+  <div class="trust-scrim"></div>
+  <div class="wrap" style="position:relative;z-index:2;">
+    <div class="section-head reveal">
+      <div class="eyebrow">CILËSI E KONTROLLUAR</div>
+      <h2>Pse të zgjidhni Alb Metal</h2>
+    </div>
+    <div class="trust-grid reveal">
+      <div class="trust-card">
+        <svg class="trust-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A4.5 4.5 0 0 0 13 19a4.5 4.5 0 0 0 4.5-4.5c0-2-1-3-2-4.5-.7 1-1.5 1.5-2 1-1-1 .5-2.5-1-5.5-1 2-3 4-4.5 6.5-.5 1-1.5 1.5-1.5 2Z"/></svg>
+        <h4>Furrë Induktive</h4>
+        <p>Teknologji moderne shkrirjeje për saktësi dhe cilësi konstante në çdo derdhje.</p>
+      </div>
+      <div class="trust-card">
+        <svg class="trust-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+        <h4>Rezistencë e Testuar</h4>
+        <p>Çdo produkt kontrollohet për ngarkesë dhe qëndrueshmëri afatgjatë.</p>
+      </div>
+      <div class="trust-card">
+        <svg class="trust-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20c2-1 3-3 3-5 0-3-2-4-2-7a5 5 0 0 1 5-5c0 2 1 3 3 3s3-1 3-3a5 5 0 0 1 5 5c0 3-2 4-2 7 0 2 1 4 3 5"/><circle cx="12" cy="13" r="2.4"/></svg>
+        <h4>Lyerje 180°C</h4>
+        <p>Mbrojtje elektrostatike ndaj korrozionit dhe kushteve atmosferike.</p>
+      </div>
+      <div class="trust-card">
+        <svg class="trust-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.8 5.8 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.8-3.8-9S9.5 5.5 12 3Z"/></svg>
+        <h4>Eksport Ndërkombëtar</h4>
+        <p>Shpërndarje në të gjithë Shqipërinë dhe klientë jashtë vendit.</p>
+      </div>
+    </div>
+    <div class="facility-strip reveal">
+      <div class="facility-photo"><img src="images/brand/facility-twilight.jpg" alt="Impianti Alb Metal, Patos" loading="lazy"></div>
+      <div class="facility-text">
+        <div class="cap-eyebrow mono">IMPIANTI YNË</div>
+        <h4>Fonderia Alb Metal, Patos</h4>
+        <p>Impianti ynë prodhues ndodhet në Patos, ku realizohet i gjithë procesi: nga shkrirja e metalit e deri te produkti final, gati për t'u shpërndarë.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="proces">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">PROCESI I PRODHIMIT</div>
+      <h2>Nga metali i shkrirë<br>te produkti final</h2>
+      <p>Çdo produkt kalon nëpër të njëjtin proces pesë-hapësh, që garanton qëndrueshmëri dhe cilësi konstante.</p>
+    </div>
+    <div class="process-list">
+      <div class="pstep reveal"><div class="pnum">01</div><h3>Shkrirje</h3><p>Gizë dhe alumin shkrihen në furrë induktive në temperatura të larta e të kontrolluara.</p></div>
+      <div class="pstep reveal"><div class="pnum">02</div><h3>Derdhje</h3><p>Metali i shkrirë derdhet me precizion në kallëpe të projektuara sipas specifikimeve.</p></div>
+      <div class="pstep reveal"><div class="pnum">03</div><h3>Formësim</h3><p>Produkti merr formën përfundimtare dhe kontrollohet për saktësi dimensionale.</p></div>
+      <div class="pstep reveal"><div class="pnum">04</div><h3>Ftohje</h3><p>Ftohje e kontrolluar që ruan qëndrueshmërinë strukturore të metalit.</p></div>
+      <div class="pstep reveal"><div class="pnum">05</div><h3>Lyerje</h3><p>Lyerje elektrostatike në 180°C për mbrojtje ndaj korrozionit dhe jetëgjatësi.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cert-bg">
+  <div class="wrap cert-row">
+    <div class="cert-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/></svg> Prodhim i kontrolluar në çdo fazë</div>
+    <div class="cert-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="1"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Prodhim sipas kërkesave të projektit</div>
+    <div class="cert-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg> Testim rezistence dhe ngarkese</div>
+  </div>
+</section>
+
+<section class="section" id="modele3d" style="padding-top:70px;padding-bottom:60px;">
+  <div class="wrap">
+    <div class="section-head reveal" style="margin-bottom:36px;">
+      <div class="eyebrow">MODELE 3D</div>
+      <h2>Produktet nga<br>çdo këndvështrim</h2>
+      <p>Modele 3D të skanuara direkt nga produktet tona reale. Rrotulloni me miun ose gishtin.</p>
+    </div>
+    <div class="product-banner reveal">
+      <img src="images/brand/product-wall.webp" alt="Linja e produkteve Alb Metal" loading="lazy">
+      <div class="product-banner-cap">
+        <div class="cap-eyebrow mono">LINJA E PRODUKTEVE</div>
+        <h4>E gjithë gama, në një vend</h4>
+      </div>
+    </div>
+    <div class="viewer-grid">
+      <div class="viewer-card reveal">
+        <div class="viewer-canvas-wrap" id="wrap-ndricues">
+          <div class="viewer-tag"><span class="dot"></span>3D LIVE</div>
+          <div class="viewer-hint">ZVARRIT PËR TË ROTULLUAR</div>
+        </div>
+        <div class="viewer-body">
+          <h3>Ndriçues Dekorativ</h3>
+          <div class="spec-row"><span>Material</span><span>Gizë e Derdhur</span></div>
+          <div class="spec-row"><span>Montimi</span><span>Mur / Kolonë</span></div>
+          <div class="spec-row"><span>Përmasa</span><span class="tag">Sipas Kërkesës</span></div>
+        </div>
+      </div>
+      <div class="viewer-card reveal">
+        <div class="viewer-canvas-wrap" id="wrap-kosha">
+          <div class="viewer-tag"><span class="dot"></span>3D LIVE</div>
+          <div class="viewer-hint">ZVARRIT PËR TË ROTULLUAR</div>
+        </div>
+        <div class="viewer-body">
+          <h3>Kosha Dekorative</h3>
+          <div class="spec-row"><span>Material</span><span>Gizë e Derdhur</span></div>
+          <div class="spec-row"><span>Montimi</span><span>Mur / Shtyllë</span></div>
+          <div class="spec-row"><span>Kapaciteti</span><span class="tag">Sipas Kërkesës</span></div>
+        </div>
+      </div>
+      <div class="viewer-card reveal">
+        <div class="viewer-canvas-wrap" id="wrap-stol">
+          <div class="viewer-tag"><span class="dot"></span>3D LIVE</div>
+          <div class="viewer-hint">ZVARRIT PËR TË ROTULLUAR</div>
+        </div>
+        <div class="viewer-body">
+          <h3>Stol Urban</h3>
+          <div class="spec-row"><span>Material</span><span>Gizë + Dru</span></div>
+          <div class="spec-row"><span>Përdorim</span><span>Parqe / Lulishte</span></div>
+          <div class="spec-row"><span>Gjatësia</span><span class="tag">Sipas Kërkesës</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px;">
+      <a href="#galeria" class="btn btn-outline">Shiko të Gjitha Fotot ↓</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="galeria">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">GALERIA</div>
+      <h2>Produktet tona<br>nga afër</h2>
+      <p>Arkivi ynë i plotë i fotove: impianti, procesi i derdhjes dhe çdo linjë produkti.</p>
+    </div>
+    <div class="gal-tabs reveal">
+      <button class="gal-tab active" data-cat="furnace">Impianti &amp; Furra</button>
+      <button class="gal-tab" data-cat="puseta-zgara">Puseta &amp; Zgara</button>
+      <button class="gal-tab" data-cat="shtylla-ndricimi">Ndriçim Rrugor</button>
+      <button class="gal-tab" data-cat="stola">Stola Urbanë</button>
+      <button class="gal-tab" data-cat="kosha">Kosha Dekorativë</button>
+    </div>
+    <div class="gal-count mono" id="gal-count"></div>
+    <div class="gal-grid reveal" id="gal-grid"></div>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lb-close">✕</button>
+  <button class="lightbox-nav lightbox-prev" id="lb-prev">‹</button>
+  <img id="lb-img" src="" alt="">
+  <button class="lightbox-nav lightbox-next" id="lb-next">›</button>
+</div>
+
+<section class="section quote-bg" id="oferte">
+  <div class="wrap quote-grid">
+    <div class="about-text reveal">
+      <div class="eyebrow">KONTAKT</div>
+      <h2 style="margin-top:14px;">Kërkoni një ofertë</h2>
+      <p style="margin-top:20px;">Na shkruani për sasi, dimensione dhe afate. Ekipi ynë përgjigjet shpejt me një ofertë të personalizuar.</p>
+      <div class="contact-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.4 2.1L8 9.9a16 16 0 0 0 6 6l1.4-1.4a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.8 2Z"/></svg> 069 206 4155 &nbsp;/&nbsp; 069 606 4155</div>
+      <div class="contact-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg> famcpatos.al@gmail.com</div>
+      <div class="contact-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Patos, Lagjja Transport, Rruga Alush Noga</div>
+      <div style="margin-top:24px;border:1px solid var(--line);border-radius:2px;overflow:hidden;filter:grayscale(0.5) contrast(1.1);">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3025.287634738283!2d19.6068481763674!3d40.68966243898231!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x135ab3879cdca5a9%3A0x61e09e243acd3522!2sFonderia%20Alb%20Metal!5e0!3m2!1sen!2s!4v1769774930173!5m2!1sen!2s" width="100%" height="220" style="border:0;display:block;" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+    <form class="reveal" id="quote-form" action="https://formspree.io/f/moeawvkp" method="POST">
+      <div class="form-row">
+        <div><label>Emri</label><input type="text" name="emri" placeholder="Emri e Mbiemri" required></div>
+        <div><label>Telefoni</label><input type="tel" name="telefoni" placeholder="+355 6X XXX XXXX" required></div>
+      </div>
+      <div><label>Email</label><input type="email" name="email" placeholder="you@example.com"></div>
+      <div class="form-row">
+        <div><label>Lloji i Produktit</label>
+          <select name="produkti">
+            <option>Puseta Gize</option>
+            <option>Zgara Metalike</option>
+            <option>Shtylla Ndriçimi</option>
+            <option>Ndriçues Dekorativë</option>
+            <option>Stola Urbanë</option>
+            <option>Kosha Dekorativë</option>
+            <option>Tjetër / Me Porosi</option>
+          </select>
+        </div>
+        <div><label>Sasia</label><input type="text" name="sasia" placeholder="p.sh. 50 copë"></div>
+      </div>
+      <div><label>Mesazhi</label><textarea name="mesazhi" placeholder="Përshkruani projektin tuaj..."></textarea></div>
+      <button class="btn" type="submit" style="justify-self:start;">Dërgo Kërkesën</button>
+      <p class="form-hint">&nbsp;</p>
+    </form>
+    <script>
+    document.getElementById('quote-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      const form = e.target;
+      const hint = form.querySelector('.form-hint');
+      const btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.textContent = 'Duke dërguar...';
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      }).then(response => {
+        if(response.ok){
+          hint.textContent = 'Faleminderit! Do t\'ju kontaktojmë së shpejti.';
+          hint.style.color = 'var(--molten-2)';
+          form.reset();
+        } else {
+          hint.textContent = 'Diçka shkoi keq. Ju lutem provoni përsëri ose na telefononi direkt.';
+          hint.style.color = '#e05252';
+        }
+        btn.disabled = false;
+        btn.textContent = 'Dërgo Kërkesën';
+      }).catch(() => {
+        hint.textContent = 'Diçka shkoi keq. Ju lutem provoni përsëri ose na telefononi direkt.';
+        hint.style.color = '#e05252';
+        btn.disabled = false;
+        btn.textContent = 'Dërgo Kërkesën';
+      });
+    });
+    </script>
+  </div>
+</section>
+
+<footer id="kontakt">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-logo"><img src="images/logo.png" alt="Fonderia Alb Metal"></div>
+        <p style="color:var(--cream-dim);font-size:13.5px;line-height:1.6;max-width:280px;">Me vendodhje në Patos, e specializuar në prodhime gize dhe alumini për infrastrukturë, rrugë dhe ndriçim urban që nga viti 2000.</p>
+      </div>
+      <div>
+        <h5>Menu</h5>
+        <ul><li><a href="#rreth">Rreth Nesh</a></li><li><a href="#proces">Procesi</a></li><li><a href="#galeria">Galeria</a></li></ul>
+      </div>
+      <div>
+        <h5>Kontakt</h5>
+        <ul><li><a href="tel:0692064155">069 206 4155</a></li><li><a href="tel:0696064155">069 606 4155</a></li><li><a href="mailto:famcpatos.al@gmail.com">famcpatos.al@gmail.com</a></li></ul>
+      </div>
+      <div>
+        <h5>Na Ndiqni</h5>
+        <ul><li><a href="https://www.facebook.com/p/ALB-METAL-Construction-100057133314009/" target="_blank" rel="noopener">Facebook</a></li><li><a href="https://www.instagram.com/alb_metal_construction" target="_blank" rel="noopener">Instagram</a></li></ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Alb Metal Construction. Të gjitha të drejtat e rezervuara.</span>
+      <span>Patos, Shqipëri</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ---------- reveal on scroll ----------
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+},{threshold:0.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// ---------- counters (smooth eased count-up) ----------
+function easeOutQuint(t){ return 1 - Math.pow(1-t, 4); }
+document.querySelectorAll('[data-count]').forEach(el=>{
+  const target = parseInt(el.getAttribute('data-count'),10);
+  let isVisible = false;
+  let loopTimer = null;
+  const duration = 1900;
+  const pauseBetween = 5000;
+
+  function runCount(){
+    const startTime = performance.now();
+    el.classList.remove('count-done');
+    el.classList.add('counting');
+    function tick(now){
+      if(!isVisible) return;
+      const elapsed = now - startTime;
+      const p = Math.min(1, elapsed/duration);
+      const eased = easeOutQuint(p);
+      el.textContent = Math.round(target*eased);
+      if(p < 1){
+        requestAnimationFrame(tick);
+      } else {
+        el.textContent = target;
+        el.classList.add('count-done');
+        loopTimer = setTimeout(()=>{ if(isVisible){ el.textContent = '0'; runCount(); } }, pauseBetween);
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting && !isVisible){
+        isVisible = true;
+        el.textContent = '0';
+        runCount();
+      } else if(!e.isIntersecting){
+        isVisible = false;
+        if(loopTimer) clearTimeout(loopTimer);
+      }
+    });
+  },{threshold:0.5});
+  obs.observe(el);
+});
+
+// ---------- about showcase carousel ----------
+const SHOWCASE_SLIDES = [
+  {img:'images/furnace/furnace-1.jpg', eyebrow:'FURRA INDUKTIVE', title:'Shkrirja e Metalit'},
+  {img:'images/furnace/furnace-2.jpg', eyebrow:'PROCESI I DERDHJES', title:'Derdhja e Gizës'},
+  {img:'images/furnace/furnace-3.jpg', eyebrow:'PRODHIM I KONTROLLUAR', title:'Formësimi i Produktit'},
+  {img:'images/furnace/furnace-6.jpg', eyebrow:'IMPIANTI, PATOS', title:'Prodhim Vendas'}
+];
+(function initShowcase(){
+  const el = document.getElementById('about-showcase');
+  const dotsWrap = document.getElementById('showcase-dots');
+  if(!el || !dotsWrap) return;
+  SHOWCASE_SLIDES.forEach((s,i)=>{
+    const slide = document.createElement('div');
+    slide.className = 'showcase-slide' + (i===0?' active':'');
+    slide.style.backgroundImage = `url('${s.img}')`;
+    const cap = document.createElement('div');
+    cap.className = 'showcase-caption';
+    cap.innerHTML = `<div class="cap-eyebrow mono">${s.eyebrow}</div><h4>${s.title}</h4>`;
+    slide.appendChild(cap);
+    el.insertBefore(slide, dotsWrap);
+
+    const dot = document.createElement('button');
+    dot.className = 'showcase-dot' + (i===0?' active':'');
+    dot.addEventListener('click', (ev)=>{ ev.stopPropagation(); goToSlide(i); resetAuto(); });
+    dotsWrap.appendChild(dot);
+  });
+  let current = 0;
+  const slides = () => el.querySelectorAll('.showcase-slide');
+  const dots = () => dotsWrap.querySelectorAll('.showcase-dot');
+  function goToSlide(i){
+    slides().forEach((s,idx)=>s.classList.toggle('active', idx===i));
+    dots().forEach((d,idx)=>d.classList.toggle('active', idx===i));
+    current = i;
+  }
+  function nextSlide(){ goToSlide((current+1) % SHOWCASE_SLIDES.length); }
+  let auto = setInterval(nextSlide, 4200);
+  function resetAuto(){ clearInterval(auto); auto = setInterval(nextSlide, 4200); }
+  el.addEventListener('click', ()=>{ nextSlide(); resetAuto(); });
+})();
+
+// ---------- top dropdown menu ----------
+(function initMenuDropdown(){
+  const trigger = document.getElementById('menu-trigger');
+  const panel = document.getElementById('menu-panel');
+  if(!trigger || !panel) return;
+  function close(){ trigger.classList.remove('open'); panel.classList.remove('open'); }
+  trigger.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    trigger.classList.toggle('open');
+    panel.classList.toggle('open');
+  });
+  panel.querySelectorAll('a').forEach(a=>a.addEventListener('click', close));
+  document.addEventListener('click', (e)=>{
+    if(!panel.contains(e.target) && !trigger.contains(e.target)) close();
+  });
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') close(); });
+})();
+
+// ---------- mobile nav ----------
+document.querySelector('.navtoggle').addEventListener('click', ()=>{
+  const nl = document.querySelector('.navlinks');
+  const headerH = document.querySelector('header').offsetHeight;
+  nl.style.display = nl.style.display === 'flex' ? 'none' : 'flex';
+  nl.style.cssText += `position:fixed;top:${headerH}px;left:0;right:0;background:#141312;flex-direction:column;padding:24px 32px;border-bottom:1px solid rgba(236,230,219,0.12);`;
+});
+
+// ================= GALLERY =================
+const GALLERY = {
+  'furnace': ['furnace-1.jpg','furnace-2.jpg','furnace-3.jpg','furnace-4.jpg','furnace-5.jpg','furnace-6.jpg'],
+  'puseta-zgara': ['puseta-1.webp','puseta-2.webp','puseta-3.webp','puseta-4.webp','puseta-5.webp','puseta-6.webp','puseta-7.webp','puseta-8.webp','puseta-9.webp','puseta-10.webp','puseta-11.webp','puseta-12.webp','puseta-13.webp','puseta-14.webp','puseta-15.webp','puseta-16.webp'],
+  'shtylla-ndricimi': ['shtylle-1.webp','shtylle-2.webp','shtylle-3.webp','shtylle-4.webp','shtylle-5.webp','shtylle-6.webp','shtylle-7.webp','shtylle-8.webp','shtylle-9.webp','shtylle-10.webp','shtylle-11.webp','shtylle-12.webp','shtylle-13.webp','shtylle-14.webp','shtylle-15.webp','shtylle-16.webp','shtylle-17.webp','shtylle-18.webp','shtylle-19.webp','shtylle-20.webp','shtylle-21.webp','shtylle-22.webp','shtylle-23.webp','shtylle-24.webp','shtylle-25.webp','shtylle-26.webp','shtylle-27.webp','shtylle-28.webp','shtylle-29.webp','shtylle-30.webp','shtylle-31.webp','shtylle-32.webp','shtylle-33.webp','shtylle-34.webp','shtylle-35.webp','shtylle-36.webp','shtylle-37.webp','shtylle-38.webp','shtylle-39.jpeg','shtylle-40.jpeg'],
+  'stola': ['stol-1.webp','stol-2.webp','stol-3.webp','stol-4.webp','stol-5.webp','stol-6.webp','stol-7.webp','stol-8.webp','stol-9.webp','stol-10.webp','stol-11.webp','stol-12.webp','stol-13.webp','stol-14.webp'],
+  'kosha': ['kosha-1.webp','kosha-2.webp','kosha-3.webp','kosha-4.webp','kosha-5.webp']
+};
+const CAT_FOLDER = {'furnace':'furnace','puseta-zgara':'puseta-zgara','shtylla-ndricimi':'shtylla-ndricimi','stola':'stola','kosha':'kosha'};
+
+let currentCat = 'furnace';
+let currentIndex = 0;
+
+function renderGallery(cat){
+  currentCat = cat;
+  const grid = document.getElementById('gal-grid');
+  const files = GALLERY[cat];
+  document.getElementById('gal-count').textContent = files.length + ' FOTO';
+  grid.innerHTML = files.map((f,i)=>`<div class="gal-item" data-i="${i}"><img loading="lazy" src="images/${CAT_FOLDER[cat]}/${f}" alt="${cat} ${i+1}"></div>`).join('');
+  grid.querySelectorAll('.gal-item').forEach(item=>{
+    item.addEventListener('click', ()=>openLightbox(parseInt(item.dataset.i,10)));
+  });
+}
+document.querySelectorAll('.gal-tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    document.querySelectorAll('.gal-tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    renderGallery(tab.dataset.cat);
+  });
+});
+renderGallery('furnace');
+
+const lightbox = document.getElementById('lightbox');
+const lbImg = document.getElementById('lb-img');
+function openLightbox(i){
+  currentIndex = i;
+  const files = GALLERY[currentCat];
+  lbImg.src = `images/${CAT_FOLDER[currentCat]}/${files[i]}`;
+  lightbox.classList.add('open');
+}
+function closeLightbox(){ lightbox.classList.remove('open'); }
+function navLightbox(dir){
+  const files = GALLERY[currentCat];
+  currentIndex = (currentIndex + dir + files.length) % files.length;
+  lbImg.src = `images/${CAT_FOLDER[currentCat]}/${files[currentIndex]}`;
+}
+document.getElementById('lb-close').addEventListener('click', closeLightbox);
+document.getElementById('lb-prev').addEventListener('click', ()=>navLightbox(-1));
+document.getElementById('lb-next').addEventListener('click', ()=>navLightbox(1));
+lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', (e)=>{
+  if(!lightbox.classList.contains('open')) return;
+  if(e.key === 'Escape') closeLightbox();
+  if(e.key === 'ArrowLeft') navLightbox(-1);
+  if(e.key === 'ArrowRight') navLightbox(1);
+});
+
+// ================= REAL 3D MODEL VIEWERS =================
+// Materials applied to the scanned meshes (which ship as raw geometry, no materials)
+const ironMat = new THREE.MeshStandardMaterial({color:0x38352f, metalness:0.75, roughness:0.42});
+const ironMatDark = new THREE.MeshStandardMaterial({color:0x211f1c, metalness:0.7, roughness:0.5});
+
+function initModelViewer(containerId, glbPath, material, opts={}){
+  const wrap = document.getElementById(containerId);
+  if(!wrap || !window.THREE || !THREE.GLTFLoader) return;
+  const w = wrap.clientWidth, h = wrap.clientHeight;
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(38, w/h, 0.05, 100);
+
+  const renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  renderer.setSize(w,h);
+  wrap.appendChild(renderer.domElement);
+
+  scene.add(new THREE.AmbientLight(0x4a4038, 1.15));
+  const key = new THREE.DirectionalLight(0xffb066, 1.7);
+  key.position.set(4,6,4); scene.add(key);
+  const rim = new THREE.DirectionalLight(0xe8621a, 1.0);
+  rim.position.set(-4,2,-3); scene.add(rim);
+  const fill = new THREE.PointLight(0xf5a623, 0.6, 12);
+  fill.position.set(0,-2,3); scene.add(fill);
+  const top = new THREE.DirectionalLight(0xffffff, 0.4);
+  top.position.set(0,8,0); scene.add(top);
+
+  const group = new THREE.Group();
+  scene.add(group);
+
+  const loader = new THREE.GLTFLoader();
+  loader.load(glbPath, (gltf)=>{
+    const model = gltf.scene;
+    model.traverse(obj=>{
+      if(obj.isMesh){
+        obj.geometry.computeVertexNormals();
+        if(!opts.keepOwnMaterial) obj.material = material;
+      }
+    });
+
+    // center + normalize scale so every model fills its viewer consistently
+    const box = new THREE.Box3().setFromObject(model);
+    const size = new THREE.Vector3(); box.getSize(size);
+    const center = new THREE.Vector3(); box.getCenter(center);
+    model.position.sub(center);
+    const maxDim = Math.max(size.x,size.y,size.z);
+    const scale = (opts.fit||2.2)/maxDim;
+    model.scale.setScalar(scale);
+    if(opts.rotX) model.rotation.x = opts.rotX;
+    if(opts.rotY) model.rotation.y = opts.rotY;
+    if(opts.rotZ) model.rotation.z = opts.rotZ;
+
+    group.add(model);
+  });
+
+  camera.position.set(opts.cx||2.6, opts.cy||1.6, opts.cz||3.2);
+  camera.lookAt(0,opts.ly||0,0);
+
+  let dragging=false, lastX=0, lastY=0, rotY=0.5, rotX=-0.1, autoRotate=true;
+  const dom = renderer.domElement;
+  dom.addEventListener('pointerdown', e=>{dragging=true;autoRotate=false;lastX=e.clientX;lastY=e.clientY;dom.setPointerCapture(e.pointerId);});
+  dom.addEventListener('pointerup', ()=>dragging=false);
+  dom.addEventListener('pointerleave', ()=>dragging=false);
+  dom.addEventListener('pointermove', e=>{
+    if(!dragging) return;
+    rotY += (e.clientX-lastX)*0.008;
+    rotX += (e.clientY-lastY)*0.008;
+    rotX = Math.max(-0.9, Math.min(0.9, rotX));
+    lastX=e.clientX; lastY=e.clientY;
+  });
+
+  function animate(){
+    requestAnimationFrame(animate);
+    if(autoRotate) rotY += (opts.rotateSpeed || 0.0045);
+    group.rotation.y = rotY;
+    group.rotation.x = rotX;
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', ()=>{
+    const nw = wrap.clientWidth, nh = wrap.clientHeight;
+    if(nw===0||nh===0) return;
+    camera.aspect = nw/nh; camera.updateProjectionMatrix();
+    renderer.setSize(nw,nh);
+  });
+}
+
+// Ready to call once we've placed the viewer containers in the page, e.g:
+// initModelViewer('wrap-ndricues', 'models/ndricues.glb', ironMat, {cz:3.4});
+// initModelViewer('wrap-kosha', 'models/kosha.glb', ironMat, {cz:3.2});
+// initModelViewer('wrap-stol', 'models/stol.glb', ironMat, {cz:3.6});
+
+window.addEventListener('load', ()=>{
+  initModelViewer('wrap-ndricues', 'models/ndricues.glb', ironMat, {fit:2.4, cx:2.2, cy:1.0, cz:2.8});
+  initModelViewer('wrap-kosha', 'models/kosha.glb', ironMat, {fit:2.4, cx:2.2, cy:1.0, cz:2.8});
+  initModelViewer('wrap-stol', 'models/stol.glb', ironMat, {fit:2.4, cx:2.2, cy:1.0, cz:2.8});
+
+  // hero flanking models: only on wide screens (CSS hides them below 1800px too,
+  // this avoids the ~3.8MB combined download on smaller/mobile viewports)
+  if(window.innerWidth >= 1800){
+    initModelViewer('hero-model-left', 'models/ndricues-hero-left.glb', null, {keepOwnMaterial:true, fit:2.1, cx:0.2, cy:0.15, cz:3.3, rotateSpeed:0.0032});
+    initModelViewer('hero-model-right', 'models/ndricues-hero-right.glb', null, {keepOwnMaterial:true, fit:2.1, cx:0.2, cy:0.15, cz:3.3, rotY:2.4, rotateSpeed:0.0032});
+  }
+});
+</script>
+</body>
+</html>
