@@ -23,6 +23,8 @@ fonderiapatos.al
 * HTML
 * CSS
 * JavaScript
+* 3D Web Components
+* Google Maps
 * Netlify
 
 ## About
